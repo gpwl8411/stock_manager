@@ -61,9 +61,6 @@ public class ProductMenu {
 	
 	
 	int choice = 0;
-//	String productId = null;
-//	int amount=0;
-//	char io;
 	ProductIO productIO = null;
 	while(true){
 		//회원정보 출력
@@ -75,7 +72,7 @@ public class ProductMenu {
 		
 		switch (choice) {
 		case 1:
-			productController.selectAll();
+			productController.selectAllIO();
 			break;
 		case 2:
 			productIO = inputProductIO();
@@ -153,7 +150,8 @@ public class ProductMenu {
 		ProductIO productIO = new ProductIO();
 		System.out.println("< 상품 입출고 정보 입력 >");
 		System.out.println("아이디 : ");
-		productIO.setProductId(sc.next());
+		String productId = sc.next();
+		productIO.setProductId(productId);
 		System.out.println("수량 : ");  
 		productIO.setAmount(sc.nextInt());
 		
@@ -173,6 +171,20 @@ public class ProductMenu {
 		else {
 			for(Product product : list) {
 				System.out.println(product);
+			}
+		}
+		System.out.println("======================================================");
+	}
+	public void displayProductIOList(List<ProductIO> list) {
+		System.out.println("======================================================");
+		//1. 조회된 행이 없는 경우
+		if(list == null || list.isEmpty()) {
+			System.out.println("조회된 행이 없습니다.");
+		}
+		//2. 조회된 행이 존재하는 경우
+		else {
+			for(ProductIO productIO : list) {
+				System.out.println(productIO);
 			}
 		}
 		System.out.println("======================================================");

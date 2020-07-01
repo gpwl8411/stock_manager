@@ -117,7 +117,6 @@ public class ProductDAO {
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
-//			e.printStackTrace();
 			throw new ProductException("상품 정보변경 오류!",e);
 		} finally {
 			close(pstmt);
@@ -144,7 +143,6 @@ public class ProductDAO {
 				return -1;
 			}
 		} catch (SQLException e) {
-//			e.printStackTrace();
 			throw new ProductException("상품 입출고 오류!",e);
 		} finally {			
 			close(pstmt);
@@ -152,6 +150,46 @@ public class ProductDAO {
 		System.out.println("result@dao = " + result);
 		
 		return result;
+	}
+
+	public List<ProductIO> selectAllIO(Connection conn) {
+		List<ProductIO> list = null;
+
+		// 사용후 반납해야할(close)자원들은 try~catch문 바깥에서 선언해야 한다.
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectAllIO");
+//		System.out.println("query@dao = "+query);
+
+		try {
+			// 1. 쿼리문을 실행할 statement객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// 2. 쿼리문 전송, 실행결과 받기
+			rset = pstmt.executeQuery();
+
+			// 3. 받은 결과값들을 객체에 옮겨 저장하기
+			list = new ArrayList<ProductIO>();
+
+			while (rset.next()) {
+				ProductIO p = new ProductIO();
+				p.setInNo(rset.getInt("in_no"));
+				p.setProductId(rset.getString("product_id"));
+				p.setIoDate(rset.getDate("iodate"));
+				p.setAmount(rset.getInt("amount"));
+				p.setStatus(rset.getString("status"));
+				list.add(p);
+			}
+
+		} catch (Exception e) {
+			throw new ProductException("전체상품 출고조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
 	}
 
 }

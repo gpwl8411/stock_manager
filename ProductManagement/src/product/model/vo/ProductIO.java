@@ -11,7 +11,7 @@ import java.sql.Date;
 * STATUS CHAR(1) CHECK (STATUS IN ('I', 'O'))
  *
  */
-public class ProductIO extends Product{
+public class ProductIO{
 	private int inNo;
 	private String productId;
 	private Date ioDate;

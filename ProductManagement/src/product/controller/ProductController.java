@@ -61,5 +61,21 @@ public class ProductController {
 
 	}
 
+	public void selectAllIO() {
+		ProductMenu productMenu = new ProductMenu();
+		try {
+			List<ProductIO> list = productService.selectAllIO();
+//		System.out.println("list@controller ="+list);
+			productMenu.displayProductIOList(list);
+
+		} catch (ProductException e) {
+			// 개발자 디버깅용
+			e.printStackTrace();
+
+			// 사용자 알림용
+			productMenu.displayError(e.getMessage());
+		}
+	}
+
 
 }

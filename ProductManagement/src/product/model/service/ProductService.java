@@ -52,5 +52,12 @@ public class ProductService {
 		return result;
 	}
 
+	public List<ProductIO> selectAllIO() {
+		Connection conn = getConnection();
+		List<ProductIO> list = new ProductDAO().selectAllIO(conn);
+		close(conn);
+		return list;
+	}
+
 
 }
